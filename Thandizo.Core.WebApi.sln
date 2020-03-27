@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thandizo.Core.WebApi", "Thandizo.Core.WebApi\Thandizo.Core.WebApi.csproj", "{A58ADD48-68A8-4398-A20F-2421CFA10700}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thandizo.Core.BLL", "Thandizo.Core.BLL\Thandizo.Core.BLL.csproj", "{86C83C91-2B41-47F2-B339-C16412D7C810}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A58ADD48-68A8-4398-A20F-2421CFA10700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58ADD48-68A8-4398-A20F-2421CFA10700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58ADD48-68A8-4398-A20F-2421CFA10700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58ADD48-68A8-4398-A20F-2421CFA10700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86C83C91-2B41-47F2-B339-C16412D7C810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86C83C91-2B41-47F2-B339-C16412D7C810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86C83C91-2B41-47F2-B339-C16412D7C810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86C83C91-2B41-47F2-B339-C16412D7C810}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17F3B43C-1D1A-4192-BBD1-5CD5D1B1ED5D}
+	EndGlobalSection
+EndGlobal
