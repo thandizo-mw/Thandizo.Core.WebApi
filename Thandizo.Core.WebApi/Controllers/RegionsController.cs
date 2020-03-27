@@ -56,14 +56,27 @@ namespace Thandizo.Core.WebApi.Controllers
                 return BadRequest(outputHandler);
             }
 
-            return Created("", outputHandler.Result);
+            return Created("", outputHandler);
         }
 
         [HttpPut("Update")]
         [CatchException(MessageHelper.UpdateError)]
         public async Task<IActionResult> Update([FromBody]RegionDTO region)
         {
-            var outputHandler = await _service.Add(region);
+            var outputHandler = await _service.Update(region);
+            if (outputHandler.IsErrorOccured)
+            {
+                return BadRequest(outputHandler);
+            }
+
+            return Ok(outputHandler);
+        }
+
+        [HttpDelete("Delete")]
+        [CatchException(MessageHelper.DeleteError)]
+        public async Task<IActionResult> Delete([FromQuery]int regionId)
+        {
+            var outputHandler = await _service.Delete(regionId);
             if (outputHandler.IsErrorOccured)
             {
                 return BadRequest(outputHandler);
