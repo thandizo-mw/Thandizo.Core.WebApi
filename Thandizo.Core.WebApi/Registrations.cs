@@ -12,7 +12,7 @@ namespace Thandizo.Core.WebApi
         /// <param name="services"></param>
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            //services.AddScoped<IDistrictRepository, DistrictRepository>();
+            services.AddScoped<ICountryService, CountryService>();
             return services.AddScoped<IRegionService, RegionService>();
         }
     }
