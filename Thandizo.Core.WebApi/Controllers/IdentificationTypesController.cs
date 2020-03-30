@@ -35,7 +35,7 @@ namespace Thandizo.Core.WebApi.Controllers
         [HttpGet("GetAll")]
         [CatchException(MessageHelper.GetListError)]
         public async Task<IActionResult> GetAll()
-        {            
+        {
             var response = await _service.Get();
 
             if (response.IsErrorOccured)
