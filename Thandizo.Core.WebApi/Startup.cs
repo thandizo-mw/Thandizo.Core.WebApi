@@ -38,7 +38,7 @@ namespace Thandizo.Core.WebApi
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Ticheze Core API",
+                    Title = "Thandizo Core API",
                     Description = "Web API for Thandizo platform",
                     Contact = new Microsoft.OpenApi.Models.OpenApiContact { Name = "COVID-19 Malawi Tech Response", Email = "thandizo.mw@gmail.com", Url = new Uri("http://www.angledimension.com") }
                 });
