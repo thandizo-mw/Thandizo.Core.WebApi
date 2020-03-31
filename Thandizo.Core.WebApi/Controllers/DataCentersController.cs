@@ -47,6 +47,7 @@ namespace Thandizo.Core.WebApi.Controllers
         }
 
         [HttpPost("Add")]
+        [ValidateModelState]
         [CatchException(MessageHelper.AddNewError)]
         public async Task<IActionResult> Add([FromBody]DataCenterDTO dataCenter)
         {
@@ -60,6 +61,7 @@ namespace Thandizo.Core.WebApi.Controllers
         }
 
         [HttpPut("Update")]
+        [ValidateModelState]
         [CatchException(MessageHelper.UpdateError)]
         public async Task<IActionResult> Update([FromBody]DataCenterDTO dataCenter)
         {

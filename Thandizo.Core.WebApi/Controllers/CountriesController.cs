@@ -47,6 +47,7 @@ namespace Thandizo.Core.WebApi.Controllers
         }
 
         [HttpPost("Add")]
+        [ValidateModelState]
         [CatchException(MessageHelper.AddNewError)]
         public async Task<IActionResult> Add([FromBody]CountryDTO country)
         {
@@ -61,6 +62,7 @@ namespace Thandizo.Core.WebApi.Controllers
 
         [HttpPut("Update")]
         [CatchException(MessageHelper.UpdateError)]
+        [ValidateModelState]
         public async Task<IActionResult> Update([FromBody]CountryDTO country)
         {
             var outputHandler = await _service.Update(country);
