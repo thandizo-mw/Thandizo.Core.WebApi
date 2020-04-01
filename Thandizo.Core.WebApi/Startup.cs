@@ -40,7 +40,7 @@ namespace Thandizo.Core.WebApi
                     Version = "v1",
                     Title = "Thandizo Core API",
                     Description = "Web API for Thandizo platform",
-                    Contact = new Microsoft.OpenApi.Models.OpenApiContact { Name = "COVID-19 Malawi Tech Response", Email = "thandizo.mw@gmail.com", Url = new Uri("http://www.angledimension.com") }
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact { Name = "COVID-19 Malawi Tech Response", Email = "thandizo.mw@gmail.com", Url = new Uri("https://www.thandizo.mw") }
                 });
                 c.IncludeXmlComments(GetXmlCommentsPath());
             });
@@ -51,12 +51,14 @@ namespace Thandizo.Core.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Khusa API V1");
-                });
             }
+
+            //this is not needed in PRODUCTION but only in Hosted Testing Environment
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Thandizo Core API V1");
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();
