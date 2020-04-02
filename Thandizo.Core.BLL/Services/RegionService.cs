@@ -86,6 +86,8 @@ namespace Thandizo.Core.BLL.Services
 
             //update region details
             regionToUpdate.RegionName = region.RegionName;
+            regionToUpdate.Longitude = region.Longitude;
+            regionToUpdate.Latitude = region.Latitude;
             regionToUpdate.RowAction = "U";
             regionToUpdate.ModifiedBy = region.CreatedBy;
             regionToUpdate.DateModified = DateTime.UtcNow.AddHours(2);
