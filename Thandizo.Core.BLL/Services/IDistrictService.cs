@@ -4,7 +4,7 @@ using Thandizo.DataModels.General;
 
 namespace Thandizo.Core.BLL.Services
 {
-    public interface IDistrictService
+    public interface IDistrictService : ISearchable
     {
         Task<OutputResponse> Add(DistrictDTO district);
         Task<OutputResponse> Delete(string districtCode);
