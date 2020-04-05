@@ -4,7 +4,7 @@ using Thandizo.DataModels.General;
 
 namespace Thandizo.Core.BLL.Services
 {
-    public interface INationalityService
+    public interface INationalityService : ISearchable
     {
         Task<OutputResponse> Add(NationalityDTO nationality);
         Task<OutputResponse> Delete(string nationalityCode);
