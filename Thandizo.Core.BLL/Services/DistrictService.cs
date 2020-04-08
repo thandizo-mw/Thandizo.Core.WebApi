@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Thandizo.ApiExtensions.DataMapping;
 using Thandizo.ApiExtensions.General;
+using Thandizo.DAL.EF.Extensions;
 using Thandizo.DAL.Models;
 using Thandizo.DataModels.Core;
 using Thandizo.DataModels.General;
@@ -159,6 +161,23 @@ namespace Thandizo.Core.BLL.Services
             {
                 IsErrorOccured = false,
                 Message = MessageHelper.DeleteSuccess
+            };
+        }
+
+        public async Task<OutputResponse> Search(string searchText)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "p_search_text", searchText }
+            };
+            var districts = await _context
+                .FromSprocAsync<Districts>("search_districts", parameters);
+
+            var mappedDistricts = new AutoMapperHelper<Districts, DistrictDTO>().MapToList(districts);
+            return new OutputResponse
+            {
+                IsErrorOccured = false,
+                Result = mappedDistricts
             };
         }
     }
