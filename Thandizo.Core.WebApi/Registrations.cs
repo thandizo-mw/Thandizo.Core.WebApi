@@ -14,6 +14,7 @@ namespace Thandizo.Core.WebApi
         {
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<INationalityService, NationalityService>();
+            services.AddScoped<IResponseTeamMappingService, ResponseTeamMappingService>();
             services.AddScoped<IResponseTeamMemberService, ResponseTeamMemberService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<IDistrictService, DistrictService>();
