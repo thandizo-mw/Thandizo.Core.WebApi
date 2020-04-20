@@ -76,9 +76,9 @@ namespace Thandizo.Core.WebApi.Controllers
 
         [HttpDelete("Delete")]
         [CatchException(MessageHelper.DeleteError)]
-        public async Task<IActionResult> Delete([FromQuery]int teamMemberId)
+        public async Task<IActionResult> Delete([FromQuery]int mappingId)
         {
-            var outputHandler = await _service.Delete(teamMemberId);
+            var outputHandler = await _service.Delete(mappingId);
             if (outputHandler.IsErrorOccured)
             {
                 return BadRequest(outputHandler.Message);
