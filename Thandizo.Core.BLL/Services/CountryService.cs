@@ -96,6 +96,7 @@ namespace Thandizo.Core.BLL.Services
 
             //update details
             countryToUpdate.CountryName = country.CountryName;
+            countryToUpdate.ExternalReferenceNumber = country.ExternalReferenceNumber;
             countryToUpdate.RowAction = "U";
             countryToUpdate.ModifiedBy = country.CreatedBy;
             countryToUpdate.DateModified = DateTime.UtcNow.AddHours(2);
