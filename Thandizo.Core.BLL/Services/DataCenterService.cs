@@ -7,6 +7,7 @@ using Thandizo.ApiExtensions.General;
 using Thandizo.DAL.Models;
 using Thandizo.DataModels.Core;
 using Thandizo.DataModels.DataCenters;
+using Thandizo.DataModels.DataCenters.Responses;
 using Thandizo.DataModels.General;
 
 namespace Thandizo.Core.BLL.Services
@@ -22,27 +23,55 @@ namespace Thandizo.Core.BLL.Services
 
         public async Task<OutputResponse> Get(int centerId)
         {
-            var DataCenter = await _context.DataCenters.FirstOrDefaultAsync(x => x.CenterId.Equals(centerId));
-           
-            var mappedDataCenter = new AutoMapperHelper<DataCenters, DataCenterDTO>().MapToObject(DataCenter);
+            var dataCenter = await _context.DataCenters.Where(x => x.CenterId.Equals(centerId))
+                .Select(x => new DataCenterResponse 
+                {
+                    CenterId = x.CenterId,
+                    CenterName = x.CenterName,
+                    CreatedBy = x.CreatedBy,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified,
+                    DistrictCode = x.DistrictCode,
+                    DistrictName = x.DistrictCodeNavigation.DistrictName,
+                    FacilityTypeId = x.FacilityTypeId,
+                    FacilityTypeName = x.FacilityType.FacilityTypeName,
+                    IsHealthFacility = x.IsHealthFacility,
+                    ModifiedBy = x.ModifiedBy,
+                    RowAction = x.RowAction
+                }).FirstOrDefaultAsync();
 
+           
             return new OutputResponse
             {
                 IsErrorOccured = false,
-                Result = mappedDataCenter
+                Result = dataCenter
             };
         }
 
         public async Task<OutputResponse> Get()
         {
-            var dataCenters = await _context.DataCenters.OrderBy(x => x.CenterName).ToListAsync();
+            var dataCenters = await _context.DataCenters.OrderBy(x => x.CenterName)
+                .Select(x => new DataCenterResponse
+                {
+                    CenterId = x.CenterId,
+                    CenterName = x.CenterName,
+                    CreatedBy = x.CreatedBy,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified,
+                    DistrictCode = x.DistrictCode,
+                    DistrictName = x.DistrictCodeNavigation.DistrictName,
+                    FacilityTypeId = x.FacilityTypeId,
+                    FacilityTypeName = x.FacilityType.FacilityTypeName,
+                    IsHealthFacility = x.IsHealthFacility,
+                    ModifiedBy = x.ModifiedBy,
+                    RowAction = x.RowAction
+                }).ToListAsync();
 
-            var mappedDataCenters = new AutoMapperHelper<DataCenters, DataCenterDTO>().MapToList(dataCenters);
 
             return new OutputResponse
             {
                 IsErrorOccured = false,
-                Result = mappedDataCenters
+                Result = dataCenters
             };
         }
 
@@ -138,7 +167,7 @@ namespace Thandizo.Core.BLL.Services
                         };
                     }
                     else
-                    { 
+                    {
                         if ((await _context.PatientFacilityMovements.AnyAsync(x => x.FromDataCenterId.Equals(centerId))) || (await _context.PatientFacilityMovements.AnyAsync(x => x.ToDataCenterId.Equals(centerId))))
                         {
                             return new OutputResponse
