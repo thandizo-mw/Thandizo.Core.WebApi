@@ -7,6 +7,7 @@ using Thandizo.ApiExtensions.DataMapping;
 using Thandizo.ApiExtensions.General;
 using Thandizo.DAL.EF.Extensions;
 using Thandizo.DAL.Models;
+using Thandizo.DataModels.Core.Responses;
 using Thandizo.DataModels.Core;
 using Thandizo.DataModels.General;
 
@@ -23,14 +24,47 @@ namespace Thandizo.Core.BLL.Services
 
         public async Task<OutputResponse> Get(string districtCode)
         {
-            var District = await _context.Districts.FirstOrDefaultAsync(x => x.DistrictCode.Equals(districtCode));
+            var district = await _context.Districts.Where(x => x.DistrictCode.Equals(districtCode))
+                .Select(x => new DistrictResponse
+                {
+                    DistrictCode = x.DistrictCode,
+                    DistrictName = x.DistrictName,
+                    Latitude = x.Latitude,
+                    Longitude = x.Longitude,
+                    RegionId = x.RegionId,
+                    RegionName = x.Region.RegionName,
+                    CreatedBy = x.CreatedBy,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified
+                }).FirstOrDefaultAsync();
            
-            var mappedDistrict = new AutoMapperHelper<Districts, DistrictDTO>().MapToObject(District);
-
             return new OutputResponse
             {
                 IsErrorOccured = false,
-                Result = mappedDistrict
+                Result = district
+            };
+        }
+
+        public async Task<OutputResponse> GetByRegion(int regionId)
+        {
+            var districts = await _context.Districts.Where(x => x.RegionId.Equals(regionId))
+                .Select( x => new DistrictResponse 
+                {
+                    DistrictCode = x.DistrictCode,
+                    DistrictName = x.DistrictName,
+                    Latitude = x.Latitude,
+                    Longitude = x.Longitude,
+                    RegionId = x.RegionId,
+                    RegionName = x.Region.RegionName,
+                    CreatedBy = x.CreatedBy,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified
+                }).ToListAsync();
+           
+            return new OutputResponse
+            {
+                IsErrorOccured = false,
+                Result = districts
             };
         }
 
