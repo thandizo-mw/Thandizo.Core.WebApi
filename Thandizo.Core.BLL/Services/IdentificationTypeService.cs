@@ -86,6 +86,7 @@ namespace Thandizo.Core.BLL.Services
 
             //update Identification Type details
             identificationTypeToUpdate.Description = identificationType.Description;
+            identificationTypeToUpdate.ExternalReferenceNumber = identificationType.ExternalReferenceNumber;
             identificationTypeToUpdate.RowAction = "U";
             identificationTypeToUpdate.ModifiedBy = identificationType.CreatedBy;
             identificationTypeToUpdate.DateModified = DateTime.UtcNow.AddHours(2);

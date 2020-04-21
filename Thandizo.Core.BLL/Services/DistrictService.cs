@@ -87,7 +87,7 @@ namespace Thandizo.Core.BLL.Services
             }
 
             //update District details
-            districtToUpdate.DistrictName = district.DistrictName;
+            districtToUpdate.DistrictName = district.DistrictName;            
             districtToUpdate.RegionId = district.RegionId;
             districtToUpdate.Longitude = district.Longitude;
             districtToUpdate.Latitude = district.Latitude;
