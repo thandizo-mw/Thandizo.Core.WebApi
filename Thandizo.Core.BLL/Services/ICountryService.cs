@@ -11,5 +11,6 @@ namespace Thandizo.Core.BLL.Services
         Task<OutputResponse> Get();
         Task<OutputResponse> Get(string countryCode);
         Task<OutputResponse> Update(CountryDTO country);
+        Task<OutputResponse> Search(string searchText);
     }
 }
