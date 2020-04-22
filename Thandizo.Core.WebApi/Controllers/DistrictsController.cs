@@ -18,6 +18,20 @@ namespace Thandizo.Core.WebApi.Controllers
             _service = service;
         }
 
+        [HttpGet("GetByRegionId")]
+        [CatchException(MessageHelper.GetItemError)]
+        public async Task<IActionResult> GetByRegionId([FromQuery] int regionId)
+        {
+            var response = await _service.GetByRegion(regionId);
+
+            if (response.IsErrorOccured)
+            {
+                return BadRequest(response.Message);
+            }
+
+            return Ok(response.Result);
+        }
+
         [HttpGet("GetById")]
         [CatchException(MessageHelper.GetItemError)]
         public async Task<IActionResult> GetById([FromQuery] string districtCode)
