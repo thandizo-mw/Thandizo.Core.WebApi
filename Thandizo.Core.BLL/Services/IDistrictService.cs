@@ -10,6 +10,7 @@ namespace Thandizo.Core.BLL.Services
         Task<OutputResponse> Delete(string districtCode);
         Task<OutputResponse> Get();
         Task<OutputResponse> Get(string districtCode);
+        Task<OutputResponse> GetByRegion(int Region);
         Task<OutputResponse> Update(DistrictDTO district);
     }
 }

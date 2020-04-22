@@ -9,34 +9,20 @@ namespace Thandizo.Core.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DistrictsController : ControllerBase
+    public class ResponseTeamMembersController : ControllerBase
     {
-        IDistrictService _service;
+        IResponseTeamMemberService _service;
 
-        public DistrictsController(IDistrictService service)
+        public ResponseTeamMembersController(IResponseTeamMemberService service)
         {
             _service = service;
         }
 
-        [HttpGet("GetByRegionId")]
-        [CatchException(MessageHelper.GetItemError)]
-        public async Task<IActionResult> GetByRegionId([FromQuery] int regionId)
-        {
-            var response = await _service.GetByRegion(regionId);
-
-            if (response.IsErrorOccured)
-            {
-                return BadRequest(response.Message);
-            }
-
-            return Ok(response.Result);
-        }
-
         [HttpGet("GetById")]
         [CatchException(MessageHelper.GetItemError)]
-        public async Task<IActionResult> GetById([FromQuery] string districtCode)
+        public async Task<IActionResult> GetById([FromQuery] int teamMemberId)
         {
-            var response = await _service.Get(districtCode);
+            var response = await _service.Get(teamMemberId);
 
             if (response.IsErrorOccured)
             {
@@ -60,24 +46,12 @@ namespace Thandizo.Core.WebApi.Controllers
             return Ok(response.Result);
         }
 
-        [HttpGet("Search")]
-        [CatchException(MessageHelper.GetListError)]
-        public async Task<IActionResult> Search(string searchText)
-        {
-            var response = await _service.Search(searchText);
-
-            if (response.IsErrorOccured)
-            {
-                return BadRequest(response.Message);
-            }
-            return Ok(response.Result);
-        }
         [HttpPost("Add")]
         [ValidateModelState]
         [CatchException(MessageHelper.AddNewError)]
-        public async Task<IActionResult> Add([FromBody]DistrictDTO district)
+        public async Task<IActionResult> Add([FromBody]ResponseTeamMemberDTO teamMember)
         {
-            var outputHandler = await _service.Add(district);
+            var outputHandler = await _service.Add(teamMember);
             if (outputHandler.IsErrorOccured)
             {
                 return BadRequest(outputHandler.Message);
@@ -89,9 +63,9 @@ namespace Thandizo.Core.WebApi.Controllers
         [HttpPut("Update")]
         [ValidateModelState]
         [CatchException(MessageHelper.UpdateError)]
-        public async Task<IActionResult> Update([FromBody]DistrictDTO district)
+        public async Task<IActionResult> Update([FromBody]ResponseTeamMemberDTO teamMember)
         {
-            var outputHandler = await _service.Update(district);
+            var outputHandler = await _service.Update(teamMember);
             if (outputHandler.IsErrorOccured)
             {
                 return BadRequest(outputHandler.Message);
@@ -102,9 +76,9 @@ namespace Thandizo.Core.WebApi.Controllers
 
         [HttpDelete("Delete")]
         [CatchException(MessageHelper.DeleteError)]
-        public async Task<IActionResult> Delete([FromQuery]string districtCode)
+        public async Task<IActionResult> Delete([FromQuery]int teamMemberId)
         {
-            var outputHandler = await _service.Delete(districtCode);
+            var outputHandler = await _service.Delete(teamMemberId);
             if (outputHandler.IsErrorOccured)
             {
                 return BadRequest(outputHandler.Message);
