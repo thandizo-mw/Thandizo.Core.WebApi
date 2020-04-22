@@ -147,7 +147,9 @@ namespace Thandizo.Core.BLL.Services
 
         public async Task<OutputResponse> Search(string searchText)
         {
-            var countries = await _context.Countries.Where(x => x.CountryName.Contains(searchText)).ToListAsync();
+            var countries = await _context.Countries
+                .Where(x => x.CountryName.ToLower().Contains(searchText.ToLower()))
+                .ToListAsync();
 
             var mappedCountries = new AutoMapperHelper<Countries, CountryDTO>().MapToList(countries);
 
