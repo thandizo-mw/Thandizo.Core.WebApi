@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Thandizo.ApiExtensions" Version="1.0.0.5" />
-    <PackageReference Include="Thandizo.DAL" Version="1.0.1.2" />
-    <PackageReference Include="Thandizo.DataModels" Version="1.0.2.9" />
+    <PackageReference Include="Thandizo.DAL" Version="1.0.1.3" />
+    <PackageReference Include="Thandizo.DataModels" Version="1.0.3.7" />
   </ItemGroup>
 
 </Project>
