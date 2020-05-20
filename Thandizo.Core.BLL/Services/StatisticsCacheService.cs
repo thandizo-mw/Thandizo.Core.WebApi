@@ -53,14 +53,9 @@ namespace Thandizo.Core.BLL.Services
                     }
                 }
             }
-            catch (HttpRequestException)
-            {
-                statistics = await FromCache();
-            }
             catch(Exception)
             {
-                result.Message = "Something went wrong";
-                result.IsErrorOccured = true;
+                statistics = await FromCache();
             }
             finally
             {
