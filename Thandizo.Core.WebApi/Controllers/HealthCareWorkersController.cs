@@ -32,6 +32,20 @@ namespace Thandizo.Core.WebApi.Controllers
             return Ok(response.Result);
         }
 
+        [HttpGet("GetByDataCenter")]
+        [CatchException(MessageHelper.GetItemError)]
+        public async Task<IActionResult> GetByDataCenter([FromQuery] int centerId)
+        {
+            var response = await _service.GetByDataCenter(centerId);
+
+            if (response.IsErrorOccured)
+            {
+                return BadRequest(response.Message);
+            }
+
+            return Ok(response.Result);
+        }
+
         [HttpGet("GetAll")]
         [CatchException(MessageHelper.GetListError)]
         public async Task<IActionResult> GetAll()

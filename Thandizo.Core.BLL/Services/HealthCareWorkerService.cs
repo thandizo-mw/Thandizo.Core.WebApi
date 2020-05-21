@@ -7,6 +7,7 @@ using Thandizo.ApiExtensions.General;
 using Thandizo.DAL.Models;
 using Thandizo.DataModels.Core;
 using Thandizo.DataModels.DataCenters;
+using Thandizo.DataModels.DataCenters.Responses;
 using Thandizo.DataModels.General;
 
 namespace Thandizo.Core.BLL.Services
@@ -22,14 +23,65 @@ namespace Thandizo.Core.BLL.Services
 
         public async Task<OutputResponse> Get(int workerId)
         {
-            var healthCareWorker = await _context.HealthCareWorkers.FirstOrDefaultAsync(x => x.WorkerId.Equals(workerId));
+            var healthCareWorkerResponse = await _context.HealthCareWorkers.Where(x => x.WorkerId.Equals(workerId))
+                .Select( x => new HealthCareWorkerResponse 
+                {
+                    CenterName = x.DataCenter.CenterName,
+                    CreatedBy = x.CreatedBy,
+                    DataCenterId = x.DataCenterId,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified,
+                    DateOfBirth = x.DateOfBirth,
+                    EmailAddress = x.EmailAddress,
+                    FirstName = x.FirstName,
+                    Gender = x.Gender,
+                    IdentificationNumber = x.IdentificationNumber,
+                    IdentificationTypeId = x.IdentificationTypeId,
+                    IdentitificationTypeName = x.IdentificationType.Description,
+                    LastName = x.LastName,
+                    ModifiedBy = x.ModifiedBy,
+                    OtherNames = x.OtherNames,
+                    PhoneNumber = x.PhoneNumber,
+                    WorkerId = x.WorkerId
+                }).FirstOrDefaultAsync();
            
-            var mappedHealthCareWorker = new AutoMapperHelper<HealthCareWorkers, HealthCareWorkerDTO>().MapToObject(healthCareWorker);
-
+           
             return new OutputResponse
             {
                 IsErrorOccured = false,
-                Result = mappedHealthCareWorker
+                Result = healthCareWorkerResponse
+            };
+        }
+
+        public async Task<OutputResponse> GetByDataCenter(int centerId)
+        {
+            var healthCareWorkers = await _context.HealthCareWorkers.Where(x => x.DataCenterId.Equals(centerId))
+                .Select(x => new HealthCareWorkerResponse
+                { 
+                    CenterName = x.DataCenter.CenterName,
+                    CreatedBy = x.CreatedBy,
+                    DataCenterId = x.DataCenterId,
+                    DateCreated = x.DateCreated,
+                    DateModified = x.DateModified,
+                    DateOfBirth = x.DateOfBirth,
+                    EmailAddress = x.EmailAddress,
+                    FirstName = x.FirstName,
+                    Gender = x.Gender,
+                    IdentificationNumber = x.IdentificationNumber,
+                    IdentificationTypeId = x.IdentificationTypeId,
+                    IdentitificationTypeName = x.IdentificationType.Description,
+                    LastName = x.LastName,
+                    ModifiedBy = x.ModifiedBy,
+                    OtherNames = x.OtherNames,
+                    PhoneNumber = x.PhoneNumber,
+                    WorkerId = x.WorkerId
+                }).ToListAsync();
+           
+            
+            return new OutputResponse
+            {
+                IsErrorOccured = false,
+                Result = healthCareWorkers
             };
         }
 
@@ -85,7 +137,7 @@ namespace Thandizo.Core.BLL.Services
                 };
             }
 
-            //update Identification Type details
+            //update health care worker details
             healthCareWorkerToUpdate.FirstName = healthCareWorker.FirstName;
             healthCareWorkerToUpdate.OtherNames = healthCareWorker.OtherNames;
             healthCareWorkerToUpdate.LastName = healthCareWorker.LastName;

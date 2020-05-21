@@ -86,5 +86,19 @@ namespace Thandizo.Core.WebApi.Controllers
 
             return Ok(outputHandler.Message);
         }
+
+        [HttpGet("Search")]
+        [CatchException(MessageHelper.GetListError)]
+        public async Task<IActionResult> Search([FromQuery] string searchText)
+        {
+            var response = await _service.Search(searchText);
+
+            if (response.IsErrorOccured)
+            {
+                return BadRequest(response.Message);
+            }
+
+            return Ok(response.Result);
+        }
     }
 }

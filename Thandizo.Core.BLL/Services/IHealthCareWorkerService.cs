@@ -11,6 +11,7 @@ namespace Thandizo.Core.BLL.Services
         Task<OutputResponse> Delete(int workerId);
         Task<OutputResponse> Get();
         Task<OutputResponse> Get(int workerId);
+        Task<OutputResponse> GetByDataCenter(int centerId);
         Task<OutputResponse> Update(HealthCareWorkerDTO healthCareWorker);
     }
 }

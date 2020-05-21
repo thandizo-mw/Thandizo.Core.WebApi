@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis.Extensions.Core.Abstractions;
 using Thandizo.Core.BLL.Services;
 
 namespace Thandizo.Core.WebApi
@@ -10,8 +11,10 @@ namespace Thandizo.Core.WebApi
         /// service descriptor
         /// </summary>
         /// <param name="services"></param>
-        public static IServiceCollection AddDomainServices(this IServiceCollection services)
+        /// <param name="localStatisticsUrl"></param>
+        public static IServiceCollection AddDomainServices(this IServiceCollection services, string localStatisticsUrl)
         {
+            services.AddScoped<IStatisticsCacheService>(x => new StatisticsCacheService(localStatisticsUrl, x.GetRequiredService<IRedisDatabase>()));
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<INationalityService, NationalityService>();
             services.AddScoped<IResponseTeamMappingService, ResponseTeamMappingService>();

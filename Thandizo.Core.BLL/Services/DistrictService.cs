@@ -172,6 +172,18 @@ namespace Thandizo.Core.BLL.Services
                             Message = "The specified district has patient location movements attached, deletion denied"
                         };
                     }
+                    else
+                    {
+                        isFound = await _context.ResponseTeamMappings.AnyAsync(x => x.DistrictCode.Equals(districtCode));
+                        if (isFound)
+                        {
+                            return new OutputResponse
+                            {
+                                IsErrorOccured = true,
+                                Message = "The specified district has response team mappings attached, deletion denied"
+                            };
+                        }
+                    }
                 }
             }
 

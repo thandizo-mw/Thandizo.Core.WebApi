@@ -144,5 +144,20 @@ namespace Thandizo.Core.BLL.Services
                 Message = MessageHelper.DeleteSuccess
             };
         }
+
+        public async Task<OutputResponse> Search(string searchText)
+        {
+            var countries = await _context.Countries
+                .Where(x => x.CountryName.ToLower().Contains(searchText.ToLower()))
+                .ToListAsync();
+
+            var mappedCountries = new AutoMapperHelper<Countries, CountryDTO>().MapToList(countries);
+
+            return new OutputResponse
+            {
+                IsErrorOccured = false,
+                Result = mappedCountries
+            };
+        }
     }
 }

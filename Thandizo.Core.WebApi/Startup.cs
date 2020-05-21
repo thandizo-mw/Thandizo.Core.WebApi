@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StackExchange.Redis.Extensions.Core;
+using StackExchange.Redis.Extensions.Core.Configuration;
+using StackExchange.Redis.Extensions.System.Text.Json;
 using System;
 using System.IO;
 using Thandizo.DAL.Models;
@@ -23,10 +26,11 @@ namespace Thandizo.Core.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var nationalStatisticsUrl = Configuration["LocalStatisticsEndpoint"];
             services.AddControllers();
             services.AddEntityFrameworkNpgsql().AddDbContext<thandizoContext>(options =>
                         options.UseNpgsql(Configuration.GetConnectionString("DatabaseConnection")));
-            services.AddDomainServices();
+            services.AddDomainServices(nationalStatisticsUrl);
 
             //Disable automatic model state validation to provide cleaner error messages to avoid default complex object
             services.Configure<ApiBehaviorOptions>(options =>
@@ -45,6 +49,29 @@ namespace Thandizo.Core.WebApi
                 });
                 c.IncludeXmlComments(GetXmlCommentsPath());
             });
+
+            var redisHost = Configuration["RedisHost"];
+            
+
+            var conf = new RedisConfiguration
+            {
+                AbortOnConnectFail = true,
+                Hosts = new RedisHost[]
+                {
+                    new RedisHost { Host = redisHost, Port = 6379 }
+                },             
+                AllowAdmin = true,
+                ConnectTimeout = 3000,
+                Database = 0,
+                ServerEnumerationStrategy = new ServerEnumerationStrategy()
+                {
+                    Mode = ServerEnumerationStrategy.ModeOptions.All,
+                    TargetRole = ServerEnumerationStrategy.TargetRoleOptions.Any,
+                    UnreachableServerAction = ServerEnumerationStrategy.UnreachableServerActionOptions.Throw
+                }
+            };
+
+            services.AddStackExchangeRedisExtensions<SystemTextJsonSerializer>(conf);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -65,7 +92,8 @@ namespace Thandizo.Core.WebApi
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
-            //app.UseHttpsRedirection();
+            app.UserRedisInformation();
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
 
