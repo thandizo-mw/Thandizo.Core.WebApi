@@ -33,7 +33,7 @@ namespace Thandizo.Core.BLL.Services
             try
             {
                 var endpoint = string.Concat(_baseUrl, "aggregates");
-                var response = await HttpRequestFactory.Get(endpoint, TimeSpan.FromMilliseconds(1500));
+                var response = await HttpRequestFactory.Get(endpoint, TimeSpan.FromSeconds(30));
 
                 if (response.IsSuccessStatusCode)
                 {
